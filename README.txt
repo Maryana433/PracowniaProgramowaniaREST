@@ -20,52 +20,49 @@ CREATE TABLE users (
 1)    @GetMapping("/users")
       public List<User> showUsers()
 
-      - возвращает всех не удаленных пользователей ( те у кого в колонке isDeleted = false )
+      - return all not deleted user ( isDeleted = false )
 
 2)    @GetMapping("/users/{id}")
       public User showUserById(@PathVariable int id)
 
-      - возвращает пользователя по id , если в колонке isDeleted = false
+      - return user by id with isDeleted = false
 
 3)    @PostMapping("/users")
       public User addNewUser(@RequestBody User user)
 
-      - добавление нового пользователя ( id не надо указывать )
-      - возвращает добаленного пользователя
+      - add new user
+      - return new user
 
-      Пример JSON
+       JSON
 
           {
-              "date": 1020290400000,  -- конвертирую с помощью сайта https://planetcalc.ru/7157/
+              "date": 1020290400000,  --https://planetcalc.ru/7157/
               "name": "IVAN",
               "surname": "IVANOV",
               "login": "ivan",
-              "deleted": false -- можно не указывать - по умолчанию будет false
+              "deleted": false -- by default false
           }
 
 4)     @DeleteMapping("/users/{id}")
       public String deleteUser(@PathVariable int id)
 
       -
-      1) Пользователя вообще нет в базе -
+      1)
                 "There is no User with id = "+id
-      2) Пользователь есть , но уже удален ( isDeleted = true ) -
+      2) 
                 "User with id = "+id+" already deleted "
-      3) Если прошлые не сработали - пользователь есть в базе и не удален - удаляем его . -
+      3) 
                 "User with id = "+id+" was deleted"
-
-      - Возвращает строку
 
 
 5)      @PutMapping("/users")
         public User updateUser(@RequestBody User user)
 
-        - модифицирует пользователя
-            1) Пользователя нет в базе - "There is no User with id = "+user.getId()
-            2) Пользователь есть ( без разницы на значение isDeleted ) - модифицирует
-        - пример JSON в пунтке 3) - ОБЯЗАТЕЛЬНО УКАЗЫВАТЬ id !!!
+        - modify user
+            1) "There is no User with id = "+user.getId()
+            2) Modify if user with id exists
 
 6)    @GetMapping("/users/deleted")
       public List<User> showDeletedUsers()
 
-     - возвращат всех удаленных пользователей
+     - return deleted users
